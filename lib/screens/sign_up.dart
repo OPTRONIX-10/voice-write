@@ -32,7 +32,7 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 42, 37, 37),
+      backgroundColor: Colors.black,
       body: SafeArea(
           child: Column(
             children: [
@@ -126,7 +126,7 @@ class _SignUpState extends State<SignUp> {
               children: [
               const Text("Already have an account?",style: TextStyle(fontSize: 15,color: Color.fromARGB(255, 109, 109, 109)),),
               TextButton(onPressed: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: ((context) => LoginPage())));
+                Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
               }, 
               child: const Text('Login',style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.teal),))
             ],)
@@ -137,3 +137,4 @@ class _SignUpState extends State<SignUp> {
       );
   }
 }
+

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:new_project/screens/email_verification.dart';
 import 'package:new_project/screens/login_page.dart';
+import 'package:new_project/screens/sign_up.dart';
 import 'package:new_project/screens/spash_screen.dart';
 
 
@@ -14,12 +16,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Super Notes',
       theme: ThemeData(
 
         primarySwatch: Colors.teal,
       ),
-      home: LoadingPage(),
+      initialRoute: '/',
+      routes: {
+        '/':(context) => LoadingPage(),
+        '/login':(context) => LoginPage(),
+        '/signup':(context) => SignUp()
+      },
     );
   }
 }

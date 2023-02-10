@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:new_project/screens/email_verification.dart';
+import 'package:new_project/screens/login_page.dart';
+import 'package:new_project/screens/sign_up.dart';
 
 import '../firebase_options.dart';
 
@@ -10,7 +13,7 @@ class LoadingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 239, 237, 237),
+      backgroundColor: Colors.black,
       body: FutureBuilder(
         future:Firebase.initializeApp(
                           options: DefaultFirebaseOptions.currentPlatform,),
@@ -18,12 +21,18 @@ class LoadingPage extends StatelessWidget {
           switch(snapshot.connectionState){
             case ConnectionState.done:
               final user = FirebaseAuth.instance.currentUser;
-              if(user?.emailVerified ?? false){
-                print('Email is verified');
-              }else{
-                print('Email not verified');
+              if(user!=null){
+                if(user.emailVerified){
+                  return LoginPage();
+                }
+                else{
+                  return EmailVerification();
+                }
               }
-              return const Text('Done');
+              else{
+                return SignUp();
+              }
+              
             default : return const Text('Loading');
           }
           
