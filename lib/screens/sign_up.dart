@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:new_project/screens/home_screens/widgets/routes.dart';
 import 'package:new_project/screens/login_page.dart';
 
 class SignUp extends StatefulWidget {
@@ -126,7 +127,7 @@ class _SignUpState extends State<SignUp> {
               children: [
               const Text("Already have an account?",style: TextStyle(fontSize: 15,color: Color.fromARGB(255, 109, 109, 109)),),
               TextButton(onPressed: (){
-                Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
+                Navigator.of(context).pushNamedAndRemoveUntil(loginRoute, (route) => false);
               }, 
               child: const Text('Login',style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.teal),))
             ],)

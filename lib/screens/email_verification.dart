@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:new_project/screens/home_screens/widgets/routes.dart';
 
 import 'login_page.dart';
 
@@ -57,7 +58,7 @@ class EmailVerification extends StatelessWidget {
               children: [
               const Text("Already Verified?",style: TextStyle(fontSize: 15,color: Color.fromARGB(255, 109, 109, 109)),),
               TextButton(onPressed: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: ((context) => LoginPage())));
+                Navigator.of(context).pushNamedAndRemoveUntil(loginRoute, (route) => false);
               }, 
               child: const Text('Login',style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.teal),))
             ],)

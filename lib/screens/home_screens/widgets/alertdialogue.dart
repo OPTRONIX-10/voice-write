@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:new_project/screens/home_screens/widgets/routes.dart';
 
 class LogoutDialog{
   Future showalertDialog(BuildContext context){
@@ -28,7 +29,7 @@ class LogoutDialog{
           ),),),
           TextButton(onPressed: ()async{
             await FirebaseAuth.instance.signOut();
-            Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
+            Navigator.of(context).pushNamedAndRemoveUntil(loginRoute, (route) => false);
           }, child: const Text('Log out',
           style: TextStyle(
             color: Color.fromARGB(255, 2, 158, 122),

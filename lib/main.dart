@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_project/screens/home_screens/front_page.dart';
+import 'package:new_project/screens/home_screens/widgets/routes.dart';
 import 'package:new_project/screens/login_page.dart';
 import 'package:new_project/screens/sign_up.dart';
 import 'package:new_project/screens/spash_screen.dart';
@@ -21,12 +22,12 @@ class MyApp extends StatelessWidget {
 
         primarySwatch: Colors.teal,
       ),
-      initialRoute: '/notesview',
+      initialRoute: splashRoute,
       routes: {
-        '/':(context) => LoadingPage(),
-        '/login':(context) => LoginPage(),
-        '/signup':(context) => SignUp(),
-        '/notesview':(context) => MainNotes()
+        splashRoute:(context) => LoadingPage(),
+        loginRoute:(context) => LoginPage(),
+        signupRoute:(context) => SignUp(),
+        notesviewRoute:(context) => MainNotes()
       },
     );
   }

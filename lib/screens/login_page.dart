@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:new_project/screens/home_screens/widgets/routes.dart';
 import 'package:new_project/screens/sign_up.dart';
 
 
@@ -96,10 +97,10 @@ class _LoginPageState extends State<LoginPage> {
                   final email = _email.text;
                   final password = _password.text;
                   try{
-                    final userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+                    await FirebaseAuth.instance.signInWithEmailAndPassword(
                     email: email, 
                     password: password);
-                    print(userCredential);
+                    Navigator.of(context).pushNamedAndRemoveUntil(notesviewRoute, (route) => false);
                   }on FirebaseAuthException catch(e){
                     if(e.code=='user-not-found'){
                      print('Invalid user');
@@ -127,7 +128,7 @@ class _LoginPageState extends State<LoginPage> {
               children: [
               const Text("Already have an account?",style: TextStyle(fontSize: 15,color: Color.fromARGB(255, 109, 109, 109)),),
               TextButton(onPressed: (){
-                Navigator.of(context).pushNamedAndRemoveUntil('/signup', (route) => false);
+                Navigator.of(context).pushNamedAndRemoveUntil(signupRoute, (route) => false);
                   
               }, 
               child: const Text('Sign up',style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.teal),))
