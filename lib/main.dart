@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_project/screens/email_verification.dart';
 import 'package:new_project/screens/home_screens/front_page.dart';
 import 'package:new_project/screens/home_screens/widgets/routes.dart';
 import 'package:new_project/screens/login_page.dart';
@@ -27,7 +28,8 @@ class MyApp extends StatelessWidget {
         splashRoute:(context) => LoadingPage(),
         loginRoute:(context) => LoginPage(),
         signupRoute:(context) => SignUp(),
-        notesviewRoute:(context) => MainNotes()
+        notesviewRoute:(context) => MainNotes(),
+        emailverificationroute:(context) => EmailVerification()
       },
     );
   }

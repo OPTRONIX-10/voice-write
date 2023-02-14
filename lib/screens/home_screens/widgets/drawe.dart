@@ -20,12 +20,12 @@ class Drawerview extends StatelessWidget {
           color: Color.fromARGB(255, 2, 158, 122)
         ),)),
         ListTile(
-          title: Text('Logout',
+          title: const Text('Logout',
           style: TextStyle(
             color: Color.fromARGB(255, 210, 208, 208),
             fontSize: 20
           ),),
-          leading: Icon(Icons.logout,color: Color.fromARGB(255, 2, 158, 122),),
+          leading: const Icon(Icons.logout,color: Color.fromARGB(255, 2, 158, 122),),
           onTap: () {
             LogoutDialog().showalertDialog(context);
           },
