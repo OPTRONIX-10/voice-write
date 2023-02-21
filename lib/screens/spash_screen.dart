@@ -1,11 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:new_project/screens/email_verification.dart';
 import 'package:new_project/screens/login_page.dart';
 import 'package:new_project/screens/sign_up.dart';
-
-import '../firebase_options.dart';
+import 'package:new_project/services/auth/auth_services.dart';
 
 class LoadingPage extends StatelessWidget {
   const LoadingPage({super.key});
@@ -15,30 +12,26 @@ class LoadingPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black,
       body: FutureBuilder(
-        future:Firebase.initializeApp(
-                          options: DefaultFirebaseOptions.currentPlatform,),
+        future: AuthServices.firebase().initialize(),
         builder: (context, snapshot) {
-          switch(snapshot.connectionState){
+          switch (snapshot.connectionState) {
             case ConnectionState.done:
-              final user = FirebaseAuth.instance.currentUser;
-              if(user!=null){
-                if(user.emailVerified){
-                  return LoginPage();
-                }
-                else{
+              final user = AuthServices.firebase().currentuser;
+              if (user != null) {
+                if (user.isEmailVerified) {
+                  return const LoginPage();
+                } else {
                   return EmailVerification();
                 }
+              } else {
+                return const SignUp();
               }
-              else{
-                return SignUp();
-              }
-              
-            default : return const Text('Loading');
+
+            default:
+              return const Text('Loading');
           }
-          
-        },          
-    ),
-         
-      );
+        },
+      ),
+    );
   }
 }

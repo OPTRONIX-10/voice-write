@@ -1,20 +1,19 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:new_project/screens/home_screens/front_page.dart';
 import 'package:new_project/screens/home_screens/widgets/errordialod.dart';
 import 'package:new_project/screens/home_screens/widgets/routes.dart';
-import 'package:new_project/screens/sign_up.dart';
+import 'package:new_project/services/auth/auth_exception.dart';
+import 'package:new_project/services/auth/auth_services.dart';
 
 import 'home_screens/widgets/errordialod.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({super.key});
+  const LoginPage({super.key});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
 
-final formkey = GlobalKey<FormState>();
+final _loginformkey = GlobalKey<FormState>();
 
 late TextEditingController _email;
 late TextEditingController _password;
@@ -42,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
       backgroundColor: Colors.black,
       body: SafeArea(
         child: Form(
-          key: formkey,
+          key: _loginformkey,
           child: Column(
             children: [
               const Padding(
@@ -111,7 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                                       : Icons.visibility)))),
                     );
                   })),
-              SizedBox(
+              const SizedBox(
                 height: 25,
               ),
               SizedBox(
@@ -123,12 +122,13 @@ class _LoginPageState extends State<LoginPage> {
                       final password = _password.text;
 
                       try {
-                        if (formkey.currentState!.validate()) {
-                          await FirebaseAuth.instance
-                              .signInWithEmailAndPassword(
-                                  email: email, password: password);
-                          final user = FirebaseAuth.instance.currentUser;
-                          if (user?.emailVerified ?? false) {
+                        if (_loginformkey.currentState!.validate()) {
+                          await AuthServices.firebase().login(
+                            email: email,
+                            password: password,
+                          );
+                          final user = AuthServices.firebase().currentuser;
+                          if (user?.isEmailVerified ?? false) {
                             Navigator.of(context).pushNamedAndRemoveUntil(
                                 notesviewRoute, (route) => false);
                           } else {
@@ -138,23 +138,15 @@ class _LoginPageState extends State<LoginPage> {
                             );
                           }
                         }
-                      } on FirebaseAuthException catch (e) {
-                        if (e.code == 'user-not-found') {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              ErrorDialog()
-                                  .Showerrordialog(context, 'Invalid User'));
-                        } else if (e.code == 'wrong-password') {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              ErrorDialog()
-                                  .Showerrordialog(context, 'Wrong Password'));
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              ErrorDialog().Showerrordialog(
-                                  context, 'Something went wrong'));
-                        }
-                      } catch (e) {
+                      } on UserNotFoundAuthException {
                         ScaffoldMessenger.of(context).showSnackBar(ErrorDialog()
-                            .Showerrordialog(context, e.toString()));
+                            .Showerrordialog(context, 'Invalid User'));
+                      } on WrongPasswordAuthException {
+                        ScaffoldMessenger.of(context).showSnackBar(ErrorDialog()
+                            .Showerrordialog(context, 'Wrong Password'));
+                      } on GenericAuthException {
+                        ScaffoldMessenger.of(context).showSnackBar(ErrorDialog()
+                            .Showerrordialog(context, 'Something went wrong'));
                       }
                     },
                     style: ButtonStyle(
