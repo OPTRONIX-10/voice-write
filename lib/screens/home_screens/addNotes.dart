@@ -105,8 +105,11 @@ class AddNotes extends StatelessWidget {
       }
 
       final note = NotesDbFunctions.instance.getNoteById(id!);
+      if (note == null) {
+        Navigator.of(_scaffolKey.currentContext!).pop();
+      }
 
-      _titleController.text = note.title;
+      _titleController.text = note!.title;
       _contentController.text = note.text;
     }
   }

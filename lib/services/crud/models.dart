@@ -7,10 +7,24 @@ class NotesModel {
   int? id;
 
   @HiveField(1)
-  final String title;
+  int? userId;
 
   @HiveField(2)
+  final String title;
+
+  @HiveField(3)
   final String text;
 
-  NotesModel({required this.title, required this.text, this.id});
+  NotesModel({this.userId, required this.title, required this.text, this.id});
+}
+
+@HiveType(typeId: 2)
+class UserModel {
+  @HiveField(0)
+  int? id;
+
+  @HiveField(1)
+  final String email;
+
+  UserModel({required this.email, this.id});
 }

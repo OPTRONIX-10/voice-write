@@ -63,10 +63,17 @@ class MainNotes extends StatelessWidget {
                         padding: const EdgeInsets.all(20),
                         children: List.generate(newList.length, (index) {
                           final notesList = newList[index];
-                          return NotesView(
-                              id: notesList.id!,
-                              title: notesList.title,
-                              content: notesList.text);
+                          try {
+                            return NotesView(
+                                id: notesList.id!,
+                                title: notesList.title,
+                                content: notesList.text);
+                          } catch (_) {
+                            return const Text(
+                              'NOTES',
+                              style: TextStyle(color: Colors.white),
+                            );
+                          }
                         }),
                       );
                     }))
