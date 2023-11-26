@@ -7,17 +7,9 @@ import 'package:new_project/screens/home_screens/widgets/routes.dart';
 import 'package:new_project/screens/login_page.dart';
 import 'package:new_project/screens/sign_up.dart';
 import 'package:new_project/screens/spash_screen.dart';
-import 'package:new_project/services/crud/models.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  Hive.initFlutter();
-
-  if (!Hive.isAdapterRegistered(NotesModelAdapter().typeId)) {
-    Hive.registerAdapter(NotesModelAdapter());
-  }
-
   runApp(const MyApp());
 }
 

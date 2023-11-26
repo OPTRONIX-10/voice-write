@@ -64,10 +64,7 @@ class MainNotes extends StatelessWidget {
                         children: List.generate(newList.length, (index) {
                           final notesList = newList[index];
                           try {
-                            return NotesView(
-                                id: notesList.id!,
-                                title: notesList.title,
-                                content: notesList.text);
+                          
                           } catch (_) {
                             return const Text(
                               'NOTES',
