@@ -2,8 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:new_project/services/crud/dbFunctions.dart';
-import 'package:new_project/services/crud/models.dart';
 
 enum ActionType { addNote, saveNote }
 
@@ -23,10 +21,10 @@ class AddNotes extends StatelessWidget {
         onPressed: () async {
           switch (type) {
             case ActionType.addNote:
-              addNote();
+              //addNote();
               break;
             case ActionType.saveNote:
-              saveNote();
+              //saveNote();
               break;
           }
         },
@@ -42,7 +40,7 @@ class AddNotes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    gettingNotes();
+    //gettingNotes();
     return Scaffold(
       key: _scaffolKey,
       backgroundColor: const Color.fromARGB(255, 42, 39, 39),
@@ -87,45 +85,45 @@ class AddNotes extends StatelessWidget {
     );
   }
 
-  Future<void> addNote() async {
-    final title = _titleController.text;
-    final content = _contentController.text;
-    final notesValue = NotesModel(
-      title: title,
-      text: content,
-    );
-    await NotesDbFunctions.instance.createNote(notesValue);
-    Navigator.of(_scaffolKey.currentContext!).pop();
-  }
+//   Future<void> addNote() async {
+//     final title = _titleController.text;
+//     final content = _contentController.text;
+//     final notesValue = NotesModel(
+//       title: title,
+//       text: content,
+//     );
+//     await NotesDbFunctions.instance.createNote(notesValue);
+//     Navigator.of(_scaffolKey.currentContext!).pop();
+//   }
 
-  void gettingNotes() async {
-    if (type == ActionType.saveNote) {
-      if (id == null) {
-        Navigator.of(_scaffolKey.currentContext!).pop();
-      }
+//   void gettingNotes() async {
+//     if (type == ActionType.saveNote) {
+//       if (id == null) {
+//         Navigator.of(_scaffolKey.currentContext!).pop();
+//       }
 
-      final note = NotesDbFunctions.instance.getNoteById(id!);
-      if (note == null) {
-        Navigator.of(_scaffolKey.currentContext!).pop();
-      }
+//       final note = NotesDbFunctions.instance.getNoteById(id!);
+//       if (note == null) {
+//         Navigator.of(_scaffolKey.currentContext!).pop();
+//       }
 
-      _titleController.text = note!.title;
-      _contentController.text = note.text;
-    }
-  }
+//       _titleController.text = note!.title;
+//       _contentController.text = note.text;
+//     }
+//   }
 
-  Future<void> saveNote() async {
-    final title = _titleController.text;
-    final content = _contentController.text;
+//   Future<void> saveNote() async {
+//     final title = _titleController.text;
+//     final content = _contentController.text;
 
-    final notesValue = NotesModel(
-      id: id,
-      title: title,
-      text: content,
-    );
-    if (notesValue.id != null) {
-      await NotesDbFunctions.instance.updateNote(notesValue, id!);
-      Navigator.of(_scaffolKey.currentContext!).pop();
-    }
-  }
+//     final notesValue = NotesModel(
+//       id: id,
+//       title: title,
+//       text: content,
+//     );
+//     if (notesValue.id != null) {
+//       await NotesDbFunctions.instance.updateNote(notesValue, id!);
+//       Navigator.of(_scaffolKey.currentContext!).pop();
+//     }
+//   }
 }
