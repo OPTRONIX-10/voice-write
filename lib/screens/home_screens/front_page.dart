@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:new_project/screens/home_screens/addNotes.dart';
 import 'package:new_project/screens/home_screens/widgets/drawe.dart';
+import 'package:new_project/screens/home_screens/widgets/notes_view_widget.dart';
 import 'package:new_project/services/auth/auth_services.dart';
+import 'package:new_project/services/crud/crud_model.dart';
 import 'package:new_project/services/crud/notes_serveices.dart';
 
 class MainNotes extends StatefulWidget {
@@ -20,12 +22,6 @@ class _MainNotesState extends State<MainNotes> {
     _notesService = NotesService();
     _notesService.openDb();
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    _notesService.close();
-    super.dispose();
   }
 
   @override
@@ -65,8 +61,28 @@ class _MainNotesState extends State<MainNotes> {
                               builder: ((context, snapshot) {
                                 switch (snapshot.connectionState) {
                                   case ConnectionState.waiting:
-                                    return const Center(
-                                        child: Text('waiting for notes'));
+                                  case ConnectionState.active:
+                                    if (snapshot.hasData) {
+                                      final allnotes =
+                                          snapshot.data as List<DatabaseNotes>;
+                                      return GridView.count(
+                                        crossAxisCount: 2,
+                                        mainAxisSpacing: 10,
+                                        crossAxisSpacing: 10,
+                                        padding: const EdgeInsets.all(20),
+                                        children: List.generate(allnotes.length,
+                                            (index) {
+                                          final notesList = allnotes[index];
+                                          return NotesView(
+                                              id: notesList.id,
+                                              title: notesList.title,
+                                              content: notesList.content);
+                                        }),
+                                      );
+                                    } else {
+                                      return Center(
+                                          child: CircularProgressIndicator());
+                                    }
                                   default:
                                     return Center(
                                         child: CircularProgressIndicator());
@@ -77,8 +93,7 @@ class _MainNotesState extends State<MainNotes> {
                       }
                     }))),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => AddNotes(
@@ -86,8 +101,7 @@ class _MainNotesState extends State<MainNotes> {
             ),
           ));
         },
-        label: const Text('ADD'),
-        icon: const Icon(Icons.add),
+        child: const Icon(Icons.note_alt_outlined),
       ),
     );
   }

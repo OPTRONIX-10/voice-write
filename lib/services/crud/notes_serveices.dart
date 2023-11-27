@@ -13,11 +13,15 @@ class NotesService {
   List<DatabaseNotes> _notes = [];
 
   static final NotesService _shared = NotesService._internal();
-  NotesService._internal();
+  NotesService._internal() {
+    _notesStreamController =
+        StreamController<List<DatabaseNotes>>.broadcast(onListen: () {
+      _notesStreamController.sink.add(_notes);
+    });
+  }
   factory NotesService() => _shared;
 
-  final _notesStreamController =
-      StreamController<List<DatabaseNotes>>.broadcast();
+  late final StreamController<List<DatabaseNotes>> _notesStreamController;
 
   Stream<List<DatabaseNotes>> get allnotes => _notesStreamController.stream;
 
@@ -50,7 +54,7 @@ class NotesService {
     }
     try {
       final docsPath = await getApplicationDocumentsDirectory();
-      final dbPath = join(docsPath.path, dbName);
+      final dbPath = join(await docsPath.path, dbName);
       final db = await openDatabase(dbPath);
       _db = db;
       await db.execute(createUserTable);
