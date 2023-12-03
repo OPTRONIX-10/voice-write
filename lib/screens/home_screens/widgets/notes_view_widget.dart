@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:new_project/screens/home_screens/addNotes.dart';
+import 'package:new_project/services/crud/notes_serveices.dart';
 
 class NotesView extends StatelessWidget {
   NotesView({
@@ -11,10 +13,22 @@ class NotesView extends StatelessWidget {
   final int id;
   final String title;
   final String content;
+
+  final NotesService _notesService = NotesService();
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(
+          settings: RouteSettings(
+            arguments: _notesService.getNotes(id: id),
+          ),
+          builder: (context) => AddNotes(
+            type: ActionType.saveNote,
+          ),
+        ));
+      },
       child: Container(
         decoration: BoxDecoration(
             border: Border.all(color: Colors.teal),
@@ -35,7 +49,9 @@ class NotesView extends StatelessWidget {
                   ),
                 ),
                 IconButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      await _notesService.deleteNote(id: id);
+                    },
                     icon: const Icon(
                       Icons.delete,
                       color: Colors.red,

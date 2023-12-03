@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:new_project/screens/home_screens/addNotes.dart';
-import 'package:new_project/screens/home_screens/widgets/drawe.dart';
 import 'package:new_project/screens/home_screens/widgets/notes_view_widget.dart';
 import 'package:new_project/services/auth/auth_services.dart';
 import 'package:new_project/services/crud/crud_model.dart';
@@ -31,26 +30,7 @@ class _MainNotesState extends State<MainNotes> {
       body: SafeArea(
         child: Padding(
             padding: const EdgeInsets.fromLTRB(0, 70, 0, 0),
-            child: //ValueListenableBuilder(
-                //     valueListenable: notesModelNotifier,
-                //     builder: (BuildContext context, List<NotesModel> newList,
-                //         Widget? _) {
-                //       return GridView.count(
-                //         crossAxisCount: 2,
-                //         mainAxisSpacing: 10,
-                //         crossAxisSpacing: 10,
-                //         padding: const EdgeInsets.all(20),
-                //         children: List.generate(newList.length, (index) {
-                //           final notesList = newList[index];
-                //           try {} catch (_) {
-                //             return const Text(
-                //               'NOTES',
-                //               style: TextStyle(color: Colors.white),
-                //             );
-                //           }
-                //         }),
-                //       );
-                //     })
+            child: 
                 FutureBuilder(
                     future: _notesService.getOrCreateUser(email: userEmail),
                     builder: ((context, snapshot) {

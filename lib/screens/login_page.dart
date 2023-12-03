@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:new_project/screens/home_screens/widgets/errordialod.dart';
+import 'package:new_project/screens/home_screens/widgets/errordialog.dart';
 import 'package:new_project/screens/home_screens/widgets/routes.dart';
 import 'package:new_project/services/auth/auth_exception.dart';
 import 'package:new_project/services/auth/auth_services.dart';
 
-import 'home_screens/widgets/errordialod.dart';
+import 'home_screens/widgets/errordialog.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

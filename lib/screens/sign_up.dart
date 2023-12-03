@@ -3,7 +3,7 @@ import 'package:new_project/screens/home_screens/widgets/routes.dart';
 import 'package:new_project/screens/login_page.dart';
 import 'package:new_project/services/auth/auth_exception.dart';
 import 'package:new_project/services/auth/auth_services.dart';
-import 'home_screens/widgets/errordialod.dart';
+import 'home_screens/widgets/errordialog.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});

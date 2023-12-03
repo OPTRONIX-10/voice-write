@@ -1,6 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.new_project">
    <application
+        android:enableOnBackInvokedCallback="true"
         android:label="new_project"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">

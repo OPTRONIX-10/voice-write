@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:new_project/screens/home_screens/widgets/generic_get_arguments.dart';
 import 'package:new_project/services/auth/auth_services.dart';
 import 'package:new_project/services/crud/crud_model.dart';
 import 'package:new_project/services/crud/notes_serveices.dart';
@@ -36,14 +36,24 @@ class _AddNotesState extends State<AddNotes> {
     super.initState();
   }
 
-  Future<DatabaseNotes> createNote() async {
+  Future<DatabaseNotes> createorGetExisitongNote(BuildContext context) async {
+    final widgetNote = context.getArument<DatabaseNotes>();
+    if (widgetNote != null) {
+      _note = widgetNote;
+      _titleController.text = widgetNote.title;
+      _contentController.text = widgetNote.content;
+      return widgetNote;
+    }
     final existingNote = _note;
     if (existingNote != null) {
       return existingNote;
     }
     final currentUser = AuthServices.firebase().currentuser!.email!;
     final owner = await _notesService.getUser(email: currentUser);
-    return await _notesService.createNote(owner);
+
+    final newNote = await _notesService.createNote(owner);
+    _note = newNote;
+    return newNote;
   }
 
   Future<void> _addNote() async {
@@ -65,6 +75,7 @@ class _AddNotesState extends State<AddNotes> {
     final title = _titleController.text;
     final content = _contentController.text;
     await _notesService.updateNote(note: note, title: title, content: content);
+    Navigator.of(_scaffolKey.currentContext!).pop();
   }
 
   void _setupTextControllerListner() {
@@ -97,7 +108,7 @@ class _AddNotesState extends State<AddNotes> {
               _addNote();
               break;
             case ActionType.saveNote:
-              _updateNote();
+              _addNote();
               break;
           }
         },
@@ -122,12 +133,11 @@ class _AddNotesState extends State<AddNotes> {
           actions: [saveButton],
         ),
         body: FutureBuilder(
-            future: createNote(),
+            future: createorGetExisitongNote(context),
             builder: ((context, snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.done:
-                  _note = snapshot.data as DatabaseNotes?;
-                  _setupTextControllerListner();
+                  //_setupTextControllerListner();
                   return Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: Column(
@@ -170,23 +180,3 @@ class _AddNotesState extends State<AddNotes> {
             })));
   }
 }
-
-
-
-//   void gettingNotes() async {
-//     if (type == ActionType.saveNote) {
-//       if (id == null) {
-//         Navigator.of(_scaffolKey.currentContext!).pop();
-//       }
-
-//       final note = NotesDbFunctions.instance.getNoteById(id!);
-//       if (note == null) {
-//         Navigator.of(_scaffolKey.currentContext!).pop();
-//       }
-
-//       _titleController.text = note!.title;
-//       _contentController.text = note.text;
-//     }
-//   }
-
-  
