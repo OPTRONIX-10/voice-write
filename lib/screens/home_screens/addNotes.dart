@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:new_project/screens/home_screens/widgets/generic_get_arguments.dart';
 import 'package:new_project/services/auth/auth_services.dart';
-import 'package:new_project/services/crud/crud_model.dart';
-import 'package:new_project/services/crud/notes_serveices.dart';
+import 'package:new_project/services/cloud/cloud_note.dart';
+import 'package:new_project/services/cloud/firebase_cloud_storage.dart';
 
 enum ActionType { addNote, saveNote }
 
@@ -25,19 +25,19 @@ class _AddNotesState extends State<AddNotes> {
   late final TextEditingController _contentController;
   late final TextEditingController _titleController;
   final _scaffolKey = GlobalKey<ScaffoldState>();
-  DatabaseNotes? _note;
-  late final NotesService _notesService;
+  CloudNote? _note;
+  late final FirebaseCloudStorage _notesService;
 
   @override
   void initState() {
-    _notesService = NotesService();
+    _notesService = FirebaseCloudStorage();
     _titleController = TextEditingController();
     _contentController = TextEditingController();
     super.initState();
   }
 
-  Future<DatabaseNotes> createorGetExisitongNote(BuildContext context) async {
-    final widgetNote = context.getArument<DatabaseNotes>();
+  Future<CloudNote> createorGetExisitongNote(BuildContext context) async {
+    final widgetNote = context.getArument<CloudNote>();
     if (widgetNote != null) {
       _note = widgetNote;
       _titleController.text = widgetNote.title;
@@ -48,10 +48,10 @@ class _AddNotesState extends State<AddNotes> {
     if (existingNote != null) {
       return existingNote;
     }
-    final currentUser = AuthServices.firebase().currentuser!.email!;
-    final owner = await _notesService.getUser(email: currentUser);
+    final currentUser = AuthServices.firebase().currentuser!;
+    final userId = currentUser.id;
 
-    final newNote = await _notesService.createNote(owner);
+    final newNote = await _notesService.createNewNote(ownerUserId: userId);
     _note = newNote;
     return newNote;
   }
@@ -62,7 +62,7 @@ class _AddNotesState extends State<AddNotes> {
     final content = _contentController.text;
     if (note != null && title.isNotEmpty && content.isNotEmpty) {
       await _notesService.updateNote(
-          note: note, title: title, content: content);
+          documentId: note.documentId, title: title, content: content);
     }
     Navigator.of(_scaffolKey.currentContext!).pop();
   }
@@ -74,24 +74,9 @@ class _AddNotesState extends State<AddNotes> {
     }
     final title = _titleController.text;
     final content = _contentController.text;
-    await _notesService.updateNote(note: note, title: title, content: content);
+    await _notesService.updateNote(
+        documentId: widget.id.toString(), title: title, content: content);
     Navigator.of(_scaffolKey.currentContext!).pop();
-  }
-
-  void _setupTextControllerListner() {
-    _titleController.removeListener(() {
-      _updateNote();
-    });
-    _contentController.removeListener(() {
-      _updateNote();
-    });
-
-    _titleController.addListener(() {
-      _updateNote();
-    });
-    _contentController.addListener(() {
-      _updateNote();
-    });
   }
 
   @override
@@ -108,7 +93,7 @@ class _AddNotesState extends State<AddNotes> {
               _addNote();
               break;
             case ActionType.saveNote:
-              _addNote();
+              
               break;
           }
         },
@@ -124,7 +109,6 @@ class _AddNotesState extends State<AddNotes> {
 
   @override
   Widget build(BuildContext context) {
-    //gettingNotes();
     return Scaffold(
         key: _scaffolKey,
         backgroundColor: const Color.fromARGB(255, 42, 39, 39),
@@ -137,7 +121,6 @@ class _AddNotesState extends State<AddNotes> {
             builder: ((context, snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.done:
-                  //_setupTextControllerListner();
                   return Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: Column(

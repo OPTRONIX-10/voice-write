@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:new_project/screens/home_screens/addNotes.dart';
-import 'package:new_project/services/crud/notes_serveices.dart';
+import 'package:new_project/services/cloud/firebase_cloud_storage.dart';
 
 class NotesView extends StatelessWidget {
   NotesView({
@@ -10,11 +10,11 @@ class NotesView extends StatelessWidget {
     required this.title,
     required this.content,
   }) : super(key: key);
-  final int id;
+  final String id;
   final String title;
   final String content;
 
-  final NotesService _notesService = NotesService();
+  final FirebaseCloudStorage _notesService = FirebaseCloudStorage();
 
   @override
   Widget build(BuildContext context) {
@@ -22,12 +22,13 @@ class NotesView extends StatelessWidget {
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
           settings: RouteSettings(
-            arguments: _notesService.getNotes(id: id),
+            arguments: _notesService.getNotes(ownerUserId: id),
           ),
           builder: (context) => AddNotes(
             type: ActionType.saveNote,
           ),
         ));
+        print(id);
       },
       child: Container(
         decoration: BoxDecoration(
@@ -50,7 +51,9 @@ class NotesView extends StatelessWidget {
                 ),
                 IconButton(
                     onPressed: () async {
-                      await _notesService.deleteNote(id: id);
+                      await _notesService.deleteNote(
+                        documentId: id.toString(),
+                      );
                     },
                     icon: const Icon(
                       Icons.delete,
