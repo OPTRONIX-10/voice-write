@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:new_project/extensions/list/filter.dart';
 import 'package:new_project/services/crud/crud_constants.dart';
 import 'package:new_project/services/crud/crud_exceptions.dart';
 import 'package:new_project/services/crud/crud_model.dart';
@@ -12,6 +13,8 @@ class NotesService {
 
   List<DatabaseNotes> _notes = [];
 
+  DatabaseUser? _user;
+
   static final NotesService _shared = NotesService._internal();
   NotesService._internal() {
     _notesStreamController =
@@ -23,7 +26,15 @@ class NotesService {
 
   late final StreamController<List<DatabaseNotes>> _notesStreamController;
 
-  Stream<List<DatabaseNotes>> get allnotes => _notesStreamController.stream;
+  Stream<List<DatabaseNotes>> get allnotes =>
+      _notesStreamController.stream.filter((notes) {
+        final currentUser = _user;
+        if (currentUser != null) {
+          return notes.userId == currentUser.id;
+        } else {
+          throw UserShouldBeSetBeforeReadingNotesException();
+        }
+      });
 
   Future<void> _cacheNotes() async {
     final allNotes = await getAllNotes();
@@ -75,11 +86,20 @@ class NotesService {
     }
   }
 
-  Future<DatabaseUser> getOrCreateUser({required String email}) async {
+  Future<DatabaseUser> getOrCreateUser(
+      {required String email, bool setAsCureentUser = true}) async {
     try {
-      return await getUser(email: email);
+      final user = await getUser(email: email);
+      if (setAsCureentUser) {
+        _user = user;
+      }
+      return user;
     } on CouldNotFindUserException {
-      return await createUser(email: email);
+      final createdUser = await createUser(email: email);
+      if (setAsCureentUser) {
+        _user = createdUser;
+      }
+      return createdUser;
     } catch (e) {
       rethrow;
     }
