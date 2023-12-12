@@ -43,8 +43,9 @@ class _MainNotesState extends State<MainNotes> {
         actions: [
           IconButton(
               onPressed: () async {
-                final conformLogout = LogoutDialog().showalertDialog(context);
-                if (conformLogout == true) {
+                final conformLogout = await showalertDialog(context);
+
+                if (conformLogout) {
                   await AuthServices.firebase().logout();
                   Navigator.of(context)
                       .pushNamedAndRemoveUntil(loginRoute, (route) => false);

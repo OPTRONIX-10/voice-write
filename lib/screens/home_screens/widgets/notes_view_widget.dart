@@ -14,7 +14,6 @@ class NotesView extends StatelessWidget {
   final String title;
   final String content;
 
-  final FirebaseCloudStorage _notesService = FirebaseCloudStorage();
 
   @override
   Widget build(BuildContext context) {
