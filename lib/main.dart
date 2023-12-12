@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 import 'package:new_project/screens/email_verification.dart';
 import 'package:new_project/screens/home_screens/front_page.dart';
@@ -19,6 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Super Notes',
       theme: ThemeData(
         primarySwatch: Colors.teal,

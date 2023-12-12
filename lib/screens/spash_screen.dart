@@ -28,7 +28,7 @@ class LoadingPage extends StatelessWidget {
               }
 
             default:
-              return const Text('Loading');
+              return const CircularProgressIndicator();
           }
         },
       ),

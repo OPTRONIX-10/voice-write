@@ -20,7 +20,7 @@ Future<T?> showGenericDialoge<T>(
                 onPressed: () {
                   if (value != null) {
                     Navigator.of(context).pop(value);
-                  }else{
+                  } else {
                     Navigator.of(context).pop();
                   }
                 },

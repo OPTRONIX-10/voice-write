@@ -31,7 +31,7 @@ class NotesView extends StatelessWidget {
         decoration: BoxDecoration(
             border: Border.all(color: Colors.teal),
             borderRadius: BorderRadius.circular(10)),
-        padding: const EdgeInsets.all(5),
+        padding: const EdgeInsets.all(10),
         child: Column(
           children: [
             Row(
@@ -46,18 +46,9 @@ class NotesView extends StatelessWidget {
                         overflow: TextOverflow.ellipsis),
                   ),
                 ),
-                IconButton(
-                    onPressed: () async {
-                      await _notesService.deleteNote(
-                        documentId: id.toString(),
-                      );
-                    },
-                    icon: const Icon(
-                      Icons.delete,
-                      color: Colors.red,
-                    ))
               ],
             ),
+            SizedBox(height: 10),
             Text(
               content,
               style: const TextStyle(
