@@ -21,14 +21,11 @@ class NotesView extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
-          settings: RouteSettings(
-            arguments: _notesService.getNotes(ownerUserId: id),
-          ),
           builder: (context) => AddNotes(
+            id: id,
             type: ActionType.saveNote,
           ),
         ));
-        print(id);
       },
       child: Container(
         decoration: BoxDecoration(
