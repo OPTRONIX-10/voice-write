@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Super Notes',
       theme: ThemeData(
+        useMaterial3: true,
         primarySwatch: Colors.teal,
       ),
       initialRoute: splashRoute,

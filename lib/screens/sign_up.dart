@@ -147,15 +147,13 @@ class _SignUpState extends State<SignUp> {
                                   context, 'Something went wrong'));
                         }
                       },
-                      style: ButtonStyle(
-                          shape: MaterialStateProperty.all(
-                              RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                  side:
-                                      const BorderSide(color: Colors.black)))),
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.teal,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20))),
                       child: const Text(
                         'Sign up',
-                        style: TextStyle(
+                        style: TextStyle(  
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,

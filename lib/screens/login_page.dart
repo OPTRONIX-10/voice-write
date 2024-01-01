@@ -147,10 +147,10 @@ class _LoginPageState extends State<LoginPage> {
                             .Showerrordialog(context, 'Something went wrong'));
                       }
                     },
-                    style: ButtonStyle(
-                        shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                            side: const BorderSide(color: Colors.black)))),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.teal,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20))),
                     child: const Text(
                       'Login',
                       style: TextStyle(
