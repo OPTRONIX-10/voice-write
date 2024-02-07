@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:new_project/screens/home_screens/widgets/errordialog.dart';
 import 'package:new_project/screens/home_screens/widgets/routes.dart';
 import 'package:new_project/services/auth/auth_exception.dart';
 import 'package:new_project/services/auth/auth_services.dart';
+import 'package:new_project/services/auth/bloc/auth_bloc.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -120,22 +122,9 @@ class _LoginPageState extends State<LoginPage> {
                       final password = _password.text;
 
                       try {
-                        if (_loginformkey.currentState!.validate()) {
-                          await AuthServices.firebase().login(
-                            email: email,
-                            password: password,
-                          );
-                          final user = AuthServices.firebase().currentuser;
-                          if (user?.isEmailVerified ?? false) {
-                            Navigator.of(context).pushNamedAndRemoveUntil(
-                                notesviewRoute, (route) => false);
-                          } else {
-                            Navigator.of(context).pushNamedAndRemoveUntil(
-                              emailverificationroute,
-                              (route) => false,
-                            );
-                          }
-                        }
+                        context.read<AuthBloc>().add(
+                            AuthEventLogin(email: email, password: password));
+                           
                       } on UserNotFoundAuthException {
                         ScaffoldMessenger.of(context).showSnackBar(ErrorDialog()
                             .Showerrordialog(context, 'Invalid User'));

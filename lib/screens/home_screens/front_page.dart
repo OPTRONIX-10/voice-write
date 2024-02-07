@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:new_project/screens/home_screens/addNotes.dart';
 import 'package:new_project/screens/home_screens/widgets/alertdialogue.dart';
 import 'package:new_project/screens/home_screens/widgets/errordialog.dart';
 import 'package:new_project/screens/home_screens/widgets/notes_view_widget.dart';
 import 'package:new_project/screens/home_screens/widgets/routes.dart';
 import 'package:new_project/services/auth/auth_services.dart';
+import 'package:new_project/services/auth/bloc/auth_bloc.dart';
 import 'package:new_project/services/cloud/cloud_note.dart';
 import 'package:new_project/services/cloud/firebase_cloud_storage.dart';
 
@@ -46,9 +48,7 @@ class _MainNotesState extends State<MainNotes> {
                 final conformLogout = await showalertDialog(context);
 
                 if (conformLogout) {
-                  await AuthServices.firebase().logout();
-                  Navigator.of(context)
-                      .pushNamedAndRemoveUntil(loginRoute, (route) => false);
+                  context.read<AuthBloc>().add(AuthEventLogout());
                 }
               },
               icon: const Icon(Icons.logout))

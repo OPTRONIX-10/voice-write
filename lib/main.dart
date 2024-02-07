@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:new_project/screens/email_verification.dart';
+import 'package:new_project/screens/home_screens/addNotes.dart';
 import 'package:new_project/screens/home_screens/front_page.dart';
 import 'package:new_project/screens/home_screens/widgets/routes.dart';
 import 'package:new_project/screens/login_page.dart';
 import 'package:new_project/screens/sign_up.dart';
 import 'package:new_project/screens/spash_screen.dart';
+import 'package:new_project/services/auth/bloc/auth_bloc.dart';
+import 'package:new_project/services/auth/firebase_auth_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,13 +28,16 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         primarySwatch: Colors.teal,
       ),
-      initialRoute: splashRoute,
+      home: BlocProvider<AuthBloc>(
+        create: (context) => AuthBloc(FirebaseAuthProvider()),
+        child: LoadingPage(),
+      ),
       routes: {
         splashRoute: (context) => const LoadingPage(),
         loginRoute: (context) => const LoginPage(),
         signupRoute: (context) => const SignUp(),
         notesviewRoute: (context) => MainNotes(),
-        emailverificationroute: (context) => const EmailVerification()
+        emailverificationroute: (context) => const EmailVerification(),
       },
     );
   }
