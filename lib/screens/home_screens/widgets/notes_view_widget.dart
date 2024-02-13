@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:new_project/screens/home_screens/addNotes.dart';
-import 'package:new_project/services/cloud/firebase_cloud_storage.dart';
+
 
 class NotesView extends StatelessWidget {
   NotesView({

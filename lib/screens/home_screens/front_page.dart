@@ -4,7 +4,6 @@ import 'package:new_project/screens/home_screens/addNotes.dart';
 import 'package:new_project/screens/home_screens/widgets/alertdialogue.dart';
 import 'package:new_project/screens/home_screens/widgets/errordialog.dart';
 import 'package:new_project/screens/home_screens/widgets/notes_view_widget.dart';
-import 'package:new_project/screens/home_screens/widgets/routes.dart';
 import 'package:new_project/services/auth/auth_services.dart';
 import 'package:new_project/services/auth/bloc/auth_bloc.dart';
 import 'package:new_project/services/cloud/cloud_note.dart';

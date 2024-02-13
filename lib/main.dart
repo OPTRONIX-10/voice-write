@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:new_project/screens/email_verification.dart';
-import 'package:new_project/screens/home_screens/addNotes.dart';
-import 'package:new_project/screens/home_screens/front_page.dart';
-import 'package:new_project/screens/home_screens/widgets/routes.dart';
-import 'package:new_project/screens/login_page.dart';
-import 'package:new_project/screens/sign_up.dart';
 import 'package:new_project/screens/spash_screen.dart';
 import 'package:new_project/services/auth/bloc/auth_bloc.dart';
 import 'package:new_project/services/auth/firebase_auth_provider.dart';
@@ -33,11 +27,11 @@ class MyApp extends StatelessWidget {
         child: LoadingPage(),
       ),
       routes: {
-        splashRoute: (context) => const LoadingPage(),
-        loginRoute: (context) => const LoginPage(),
-        signupRoute: (context) => const SignUp(),
-        notesviewRoute: (context) => MainNotes(),
-        emailverificationroute: (context) => const EmailVerification(),
+        // splashRoute: (context) => const LoadingPage(),
+        // loginRoute: (context) => const LoginPage(),
+        // signupRoute: (context) => const SignUp(),
+        // notesviewRoute: (context) => MainNotes(),
+        // emailverificationroute: (context) => const EmailVerification(),
       },
     );
   }

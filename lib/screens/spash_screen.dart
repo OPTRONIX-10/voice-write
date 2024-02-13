@@ -4,7 +4,7 @@ import 'package:new_project/screens/email_verification.dart';
 import 'package:new_project/screens/home_screens/front_page.dart';
 import 'package:new_project/screens/login_page.dart';
 import 'package:new_project/screens/sign_up.dart';
-import 'package:new_project/services/auth/auth_services.dart';
+
 import 'package:new_project/services/auth/bloc/auth_bloc.dart';
 
 class LoadingPage extends StatelessWidget {
@@ -20,6 +20,8 @@ class LoadingPage extends StatelessWidget {
         return EmailVerification();
       } else if (state is AuthStatLoggedOut) {
         return LoginPage();
+      } else if (state is AuthStateRegistering) {
+        return SignUp();
       } else {
         return Scaffold(
           body: Center(

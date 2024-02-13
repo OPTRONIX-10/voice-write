@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:new_project/screens/home_screens/widgets/routes.dart';
-import 'package:new_project/services/auth/auth_services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:new_project/services/auth/bloc/auth_bloc.dart';
 
 class EmailVerification extends StatelessWidget {
   const EmailVerification({super.key});
@@ -51,7 +51,9 @@ class EmailVerification extends StatelessWidget {
                     width: 370,
                     child: ElevatedButton(
                       onPressed: () async {
-                        await AuthServices.firebase().sendEmailVerification();
+                        context
+                            .read<AuthBloc>()
+                            .add(AuthEventSendVerification());
                       },
                       style: ButtonStyle(
                           shape:
@@ -80,9 +82,7 @@ class EmailVerification extends StatelessWidget {
                     ),
                     TextButton(
                         onPressed: () async {
-                          await AuthServices.firebase().logout();
-                          Navigator.of(context).pushNamedAndRemoveUntil(
-                              loginRoute, (route) => false);
+                          context.read<AuthBloc>().add(AuthEventLogout());
                         },
                         child: const Text(
                           'Login',
