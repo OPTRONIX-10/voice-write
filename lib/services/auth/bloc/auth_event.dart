@@ -29,6 +29,11 @@ class AuthEventLogin extends AuthEvent {
   const AuthEventLogin({required this.email, required this.password});
 }
 
+class AuthEventForgtPassword extends AuthEvent {
+  final String? email;
+  const AuthEventForgtPassword({required this.email});
+}
+
 class AuthEventLogout extends AuthEvent {
   const AuthEventLogout();
 }

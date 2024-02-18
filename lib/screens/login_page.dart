@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:new_project/screens/home_screens/widgets/errordialog.dart';
 
-
 import 'package:new_project/services/auth/auth_exception.dart';
 
 import 'package:new_project/services/auth/bloc/auth_bloc.dart';
@@ -19,7 +18,6 @@ final _loginformkey = GlobalKey<FormState>();
 late TextEditingController _email;
 late TextEditingController _password;
 ValueNotifier<bool> _passtext = ValueNotifier(true);
-
 
 class _LoginPageState extends State<LoginPage> {
   @override
@@ -42,7 +40,6 @@ class _LoginPageState extends State<LoginPage> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is AuthStatLoggedOut) {
-         
           if (state.exception is UserNotFoundAuthException) {
             ScaffoldMessenger.of(context).showSnackBar(
                 ErrorDialog().Showerrordialog(context, 'User Not Found'));
@@ -129,8 +126,23 @@ class _LoginPageState extends State<LoginPage> {
                                         : Icons.visibility)))),
                       );
                     })),
-                const SizedBox(
-                  height: 25,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                        onPressed: () {
+                          context
+                              .read<AuthBloc>()
+                              .add(AuthEventForgtPassword(email: null));
+                        },
+                        child: const Text(
+                          'Forgot Password?',
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.teal),
+                        )),
+                  ],
                 ),
                 SizedBox(
                     height: 55,

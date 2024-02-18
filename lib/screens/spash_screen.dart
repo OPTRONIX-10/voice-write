@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:new_project/helpers/loading/loadin_screen.dart';
 import 'package:new_project/screens/email_verification.dart';
+import 'package:new_project/screens/forget_password_view.dart';
 import 'package:new_project/screens/home_screens/front_page.dart';
 import 'package:new_project/screens/login_page.dart';
 import 'package:new_project/screens/sign_up.dart';
@@ -31,6 +32,8 @@ class LoadingPage extends StatelessWidget {
         return LoginPage();
       } else if (state is AuthStateRegistering) {
         return SignUp();
+      } else if (state is AuthStateForgotPassword) {
+        return ForgotPasswordView();
       } else {
         return Scaffold(
           body: Center(
