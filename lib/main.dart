@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:new_project/screens/spash_screen.dart';
+import 'package:new_project/screens/bloc_handle_page_screen.dart';
 import 'package:new_project/services/auth/bloc/auth_bloc.dart';
 import 'package:new_project/services/auth/firebase_auth_provider.dart';
 
@@ -24,15 +24,8 @@ class MyApp extends StatelessWidget {
       ),
       home: BlocProvider<AuthBloc>(
         create: (context) => AuthBloc(FirebaseAuthProvider()),
-        child: LoadingPage(),
+        child: BlocPageHandleScreen(),
       ),
-      routes: {
-        // splashRoute: (context) => const LoadingPage(),
-        // loginRoute: (context) => const LoginPage(),
-        // signupRoute: (context) => const SignUp(),
-        // notesviewRoute: (context) => MainNotes(),
-        // emailverificationroute: (context) => const EmailVerification(),
-      },
     );
   }
 }

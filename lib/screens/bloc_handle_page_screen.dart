@@ -9,8 +9,8 @@ import 'package:new_project/screens/sign_up.dart';
 
 import 'package:new_project/services/auth/bloc/auth_bloc.dart';
 
-class LoadingPage extends StatelessWidget {
-  const LoadingPage({super.key});
+class BlocPageHandleScreen extends StatelessWidget {
+  const BlocPageHandleScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
