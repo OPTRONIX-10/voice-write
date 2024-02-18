@@ -50,7 +50,10 @@ class _MainNotesState extends State<MainNotes> {
                   context.read<AuthBloc>().add(AuthEventLogout());
                 }
               },
-              icon: const Icon(Icons.logout))
+              icon: const Icon(
+                Icons.logout,
+                color: Colors.teal,
+              ))
         ],
       ),
       body: SafeArea(
@@ -95,6 +98,7 @@ class _MainNotesState extends State<MainNotes> {
             })),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.teal,
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => AddNotes(
@@ -102,7 +106,10 @@ class _MainNotesState extends State<MainNotes> {
             ),
           ));
         },
-        child: const Icon(Icons.note_alt_outlined),
+        child: const Icon(
+          Icons.note_alt_outlined,
+          color: Colors.white,
+        ),
       ),
     );
   }

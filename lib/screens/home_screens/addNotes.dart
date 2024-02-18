@@ -75,7 +75,7 @@ class _AddNotesState extends State<AddNotes> {
     super.dispose();
   }
 
-  Widget get saveButton => TextButton.icon(
+  Widget get saveButton => IconButton(
         onPressed: () async {
           switch (widget.type) {
             case ActionType.addNote:
@@ -88,11 +88,7 @@ class _AddNotesState extends State<AddNotes> {
         },
         icon: const Icon(
           Icons.save,
-          color: Colors.white,
-        ),
-        label: const Text(
-          'SAVE',
-          style: TextStyle(color: Colors.white),
+          color: Colors.teal,
         ),
       );
 
@@ -103,41 +99,50 @@ class _AddNotesState extends State<AddNotes> {
         key: _scaffolKey,
         backgroundColor: const Color.fromARGB(255, 42, 39, 39),
         appBar: AppBar(
-          title: Text(widget.type.name.toUpperCase()),
+          centerTitle: true,
+          backgroundColor: const Color.fromARGB(255, 82, 81, 81),
+          title: Text(widget.type.name.toUpperCase(),
+              style: TextStyle(
+                  fontSize: 38,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(255, 2, 158, 122))),
           actions: [saveButton],
         ),
         body: Padding(
           padding: const EdgeInsets.all(15.0),
-          child: Column(
-            children: [
-              TextFormField(
-                controller: _titleController,
-                style: const TextStyle(color: Colors.white),
-                decoration: const InputDecoration(
-                  hintText: 'Title',
-                  hintStyle: TextStyle(
-                      color: Color.fromARGB(255, 210, 208, 208), fontSize: 18),
-                  filled: true,
-                  fillColor: Color.fromARGB(255, 82, 81, 81),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                TextFormField(
+                  controller: _titleController,
+                  style: const TextStyle(color: Colors.white),
+                  decoration: const InputDecoration(
+                    hintText: 'Title',
+                    hintStyle: TextStyle(
+                        color: Color.fromARGB(255, 210, 208, 208), fontSize: 18),
+                    filled: true,
+                    fillColor: Color.fromARGB(255, 82, 81, 81),
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              TextFormField(
-                controller: _contentController,
-                maxLength: 100,
-                maxLines: 4,
-                style: const TextStyle(color: Colors.white),
-                decoration: const InputDecoration(
-                  hintText: 'Content',
-                  hintStyle: TextStyle(
-                      color: Color.fromARGB(255, 210, 208, 208), fontSize: 18),
-                  filled: true,
-                  fillColor: Color.fromARGB(255, 82, 81, 81),
+                const SizedBox(
+                  height: 20,
                 ),
-              )
-            ],
+                TextFormField(
+                  controller: _contentController,
+                  maxLength: 100,
+                  maxLines: 4,
+                  style: const TextStyle(color: Colors.white),
+                  decoration: const InputDecoration(
+                      hintText: 'Content',
+                      hintStyle: TextStyle(
+                          color: Color.fromARGB(255, 210, 208, 208),
+                          fontSize: 18),
+                      filled: true,
+                      fillColor: Color.fromARGB(255, 82, 81, 81),
+                      counterText: ''),
+                )
+              ],
+            ),
           ),
         ));
   }
