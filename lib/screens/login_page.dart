@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:new_project/screens/home_screens/widgets/errordialog.dart';
-import 'package:new_project/screens/home_screens/widgets/loading_dialog.dart';
+
 
 import 'package:new_project/services/auth/auth_exception.dart';
 
@@ -19,7 +19,7 @@ final _loginformkey = GlobalKey<FormState>();
 late TextEditingController _email;
 late TextEditingController _password;
 ValueNotifier<bool> _passtext = ValueNotifier(true);
-CloseDialog? _closeDialogHandle;
+
 
 class _LoginPageState extends State<LoginPage> {
   @override
@@ -42,18 +42,7 @@ class _LoginPageState extends State<LoginPage> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is AuthStatLoggedOut) {
-          final closeDialog = _closeDialogHandle;
-
-          if (!state.isLoading && closeDialog != null) {
-            closeDialog();
-            _closeDialogHandle = null;
-          }
-
-          if (state.isLoading && closeDialog == null) {
-            _closeDialogHandle =
-                showLoadingDialog(context: context, text: 'Loadinag...');
-          }
-
+         
           if (state.exception is UserNotFoundAuthException) {
             ScaffoldMessenger.of(context).showSnackBar(
                 ErrorDialog().Showerrordialog(context, 'User Not Found'));

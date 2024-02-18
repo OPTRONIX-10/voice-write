@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:new_project/helpers/loading/loadin_screen.dart';
 import 'package:new_project/screens/email_verification.dart';
 import 'package:new_project/screens/home_screens/front_page.dart';
 import 'package:new_project/screens/login_page.dart';
@@ -13,7 +14,15 @@ class LoadingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<AuthBloc>().add(AuthEventInitialize());
-    return BlocBuilder<AuthBloc, AuthState>(builder: ((context, state) {
+    return BlocConsumer<AuthBloc, AuthState>(listener: (context, state) {
+      if (state.isLoading) {
+        LoadingScreen().show(
+            context: context,
+            text: state.loadingtext ?? 'Please wait a moment');
+      } else {
+        LoadingScreen().hide();
+      }
+    }, builder: ((context, state) {
       if (state is AuthStateLoggedIn) {
         return MainNotes();
       } else if (state is AuthStatNeedsVerification) {
